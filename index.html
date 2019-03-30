@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>repl.it</title>
+  <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" rel="stylesheet">
+  <link href="reset.css" rel="stylesheet" type="text/css" />
+  <link href="styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+  <main>
+
+    <h1> Pomodoro Clock </h1>
+
+    <div id=control-bar>
+
+      <div id='session'>
+        <h2>Session</h2>
+        <div id='session-display'>
+          <button class="controls" id="up-s"><i class="fas fa-chevron-up"></i></button>
+          <p id="session-length"></p>  
+          <button class="controls" id="down-s"><i class="fas fa-chevron-down"></i></button>
+        </div>
+      </div> 
+
+      <div id='break'>
+        <h2>Break</h2>
+        <div id='break-display'>
+          <button class="controls" id="up-b"><i class="fas fa-chevron-up"></i></button>
+          <p id="break-length"></p>
+          <button class="controls" id="down-b"><i class="fas fa-chevron-down"></i></button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id= 'main-clock'>
+    
+      <h2>Timer</h2>
+    
+      <div id='main-display'>
+        <p>25:00</p>  
+      </div>
+
+      <div id='clock-controls'>
+        <button class="controls" id="play"><i class="fas fa-play"></i></button>
+        <button class="controls" id="pause"><i class="fas fa-pause"></i></button>
+        <button class="controls" id="reset"><i class="fas fa-undo-alt"></i></button>
+        <button class="controls" id="stop"><i class="fas fa-stop"></i></button>
+      </div>
+
+    </div>
+
+  </main>
+  
+	<script src="main.js"></script>
+</body>
+
+</html>
