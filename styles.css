@@ -14,7 +14,7 @@
       body {
         font-family: sans-serif;
       }
-  
+      
       main {
         max-width: 500px;
         margin: 0 auto;
@@ -26,6 +26,10 @@
       h2 {
         font-weight: bold;
         text-align: center;
+      }
+
+      .controls {
+        cursor: pointer;
       }
   
       #control-bar {

@@ -3,83 +3,132 @@ const buttons = document.querySelectorAll('button');
     
 const sessionLength = document.querySelector("#session-length");
 const breakLength = document.querySelector("#break-length");
-/*
-const sessionUp = document.querySelector("#up-s");
-const sessionDown = document.querySelector("#down-s");
 
-const breakUp = document.querySelector("#up-b");
-const breakDown = document.querySelector("#down-b");
-*/
 const timeDisplay = document.querySelector("#main-display p");
 
-let sessionNum = 25;
-let breakNum = 5;
+let sessionTime = 25;
+let breakTime = 5;
 let running = false;
-let breakrun = false;
+let breakrun = true;
+let myTime;
+let timer = sessionTime * 60;
+let secsPassed = 0;
+let currTime = sessionTime + ':00';
 
-let timer = 25;
 
-sessionLength.textContent = sessionNum + ':00';
-breakLength.textContent = breakNum + ':00';
+function displayValues( m , b, s ) {
+  timeDisplay.textContent = m ;
+  sessionLength.textContent = b + ':00';
+  breakLength.textContent = s + ':00';
+}
 
+displayValues(currTime, sessionTime, breakTime);
 
 buttons.forEach(button => {
-  button.addEventListener( 'click', (e) => {
-    doAction(e.target.id);
-    console.log(e);
+  
+  button.addEventListener( 'mousedown', () => {
+    
+    doAction(button.id);
 
-    sessionLength.textContent = sessionNum + ':00';
-    breakLength.textContent = breakNum + ':00';
+    if(!running && button.id != "pause") {
+    displayValues(sessionTime + ':00', sessionTime, breakTime);
+    timer = sessionTime * 60;
+    }
+
   });
 });
 
+
 function doAction(key){
+  
+  if(!running)
+    switch (key) {
+    
+      case 'up-s': 
+        ++sessionTime;
+        break;
+      
+      case 'down-s': 
+        (sessionTime > 1)? --sessionTime : null;
+        break; 
+
+      case 'up-b': 
+        ++breakTime ;
+        break;
+      
+      case 'down-b': 
+        (breakTime > 1)? --breakTime : null;
+        break; 
+  }
+
   switch (key) {
     
-    case 'up-s': 
-      sessionNum++;
+    case "start":
+      startClock(sessionTime * 60);   
       break;
 
-    case 'down-s': 
-      sessionNum--;
-      break; 
+    case "reset":
+      resetClock();
+      break;
 
-    
+    case "stop":
+      stopClock();
+      break;
+
+    case "pause":
+      pauseClock();
+      break;
   }
 }
-/*
-sessionUp.addEventListener('click', () => {
-  sessionNum++;
-  sessionLength.textContent = sessionNum + ':00';
 
-  if(!running){
-    timeDisplay.textContent = sessionNum + ':00';
-    timer = sessionNum;
-  }
-});
-
-sessionDown.addEventListener('click', () => {
+ 
+function countDown( secs = 0, mins = 0) {
   
-  sessionNum--;
+  secsPassed++;
+  secs = timer - secsPassed;
+ 
+  if(secs == 0) {
+    secsPassed = 0;
+    
+    if(breakrun)
+      timer = breakTime * 60;
+    else
+      timer = sessionTime * 60;
 
-  sessionLength.textContent = sessionNum + ':00';
-
-  if(!running){
-    timeDisplay.textContent = sessionNum + ':00';
-    timer = sessionNum;
+    breakrun = !breakrun;
   }
-});
 
-breakUp.addEventListener('click', () => {
-  breakNum++;
-  breakLength.textContent = breakNum + ':00';
-});
+  mins = Math.floor(secs / 60);
+  secs = secs % 60; 
+  currTime = `${Math.floor(mins/10)}${mins%10}` + ':' + `${Math.floor(secs/10)}${secs%10}`;
+  
+  displayValues(currTime, sessionTime, breakTime);
+}
 
-breakDown.addEventListener('click', () => {
-  if(breakNum > 0)
-  breakNum--;
+function startClock() {
+  running = true;
+  myTime = setInterval( () => countDown() , 1000);
+  
+}
 
-  breakLength.textContent = breakNum + ':00';
-});
+function resetClock() {
+  running = false;
+  clearInterval(myTime);
+  breakrun = true;
+  sessionTime = 25;
+  breakTime = 5;
+  secsPassed = 0;
+  currTime = sessionTime + ':00';
+}
 
-*/
+function stopClock() {
+  running = false;
+  clearInterval(myTime);
+  secsPassed = 0;
+  currTime = sessionTime + ':00';
+}
+
+function pauseClock( ) {
+  running = false;
+  clearInterval(myTime);
+}
